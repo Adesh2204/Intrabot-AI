@@ -1,0 +1,94 @@
+# Intrabot-Ai/src/ingest.py
+"""
+Simple ingest script:
+- Reads .md/.txt files from data/
+- Splits into chunks
+- Embeds chunks with sentence-transformers
+- Stores chunks + embeddings into a local ChromaDB collection
+"""
+
+import os
+from pathlib import Path
+from sentence_transformers import SentenceTransformer
+import chromadb
+
+# ----- CONFIG -----
+MODEL_NAME = "all-MiniLM-L6-v2"
+DATA_DIR = Path("offline-org-chatbot/data")
+CHROMA_DIR = Path("offline-org-chatbot/.chromadb")
+COLLECTION_NAME = "intrabot_docs"
+CHUNK_SIZE_WORDS = 500     # increased for better context coherence
+CHUNK_OVERLAP = 100
+BATCH_SIZE = 32
+# -------------------
+
+def get_roles(filename):
+    if 'hr' in filename.lower():
+        return ['employee', 'hr', 'manager']
+    elif 'it' in filename.lower():
+        return ['employee', 'it']
+    elif 'policies' in filename.lower():
+        return ['manager', 'hr']
+    else:
+        return ['employee']
+
+def load_text_files(data_dir=DATA_DIR):
+    print(f"Looking for files in: {data_dir}")
+    docs = []
+    for p in sorted(data_dir.glob("*.*")):
+        if p.suffix.lower() in [".md", ".txt"]:
+            text = p.read_text(encoding="utf8")
+            roles = get_roles(p.name)
+            docs.append({"id": str(p), "source": p.name, "text": text, "roles": roles})
+    return docs
+
+def chunk_text(text, chunk_size=CHUNK_SIZE_WORDS, overlap=CHUNK_OVERLAP):
+    words = text.split()
+    chunks = []
+    i = 0
+    if not words:
+        return []
+    while i < len(words):
+        start_char = len(" ".join(words[:i])) + (1 if i > 0 else 0)
+        chunk_words = words[i:i+chunk_size]
+        chunk = " ".join(chunk_words)
+        chunks.append({"text": chunk, "start": start_char})
+        i += chunk_size - overlap
+    return chunks
+
+def main():
+    print("Running ingest for project: Intrabot-Ai")
+    print(f"Current working directory: {os.getcwd()}")
+    print(f"Data directory path: {DATA_DIR.resolve()}")
+    model = SentenceTransformer(MODEL_NAME)
+    print(f"Loaded embedding model: {MODEL_NAME}")
+
+    client = chromadb.PersistentClient(path=str(CHROMA_DIR))
+    collection = client.get_or_create_collection(COLLECTION_NAME)
+    print(f"Using ChromaDB collection: {COLLECTION_NAME} (persist dir: {CHROMA_DIR})")
+
+    docs = load_text_files()
+    print(f"Found {len(docs)} files in {DATA_DIR}/")
+
+    all_texts, metadatas, ids = [], [], []
+    for d in docs:
+        chunks = chunk_text(d["text"])
+        print(f" - {d['source']} -> {len(chunks)} chunk(s)")
+        for idx, c in enumerate(chunks):
+            all_texts.append(c["text"])
+            metadatas.append({"source": d["source"], "chunk_id": idx, "start": c["start"], "roles": ",".join(d["roles"])})
+            ids.append(f"{d['source']}_chunk_{idx}")
+
+    if not all_texts:
+        print("No text chunks found. Add .md/.txt files into the data/ folder and re-run.")
+        return
+
+    print(f"Creating embeddings for {len(all_texts)} chunks (batch {BATCH_SIZE}) ...")
+    embeddings = model.encode(all_texts, show_progress_bar=True, batch_size=BATCH_SIZE)
+
+    print("Adding documents + embeddings to ChromaDB ...")
+    collection.add(documents=all_texts, metadatas=metadatas, ids=ids, embeddings=embeddings.tolist())
+    print("Ingest complete. ChromaDB persisted to:", CHROMA_DIR)
+
+if __name__ == "__main__":
+    main()
