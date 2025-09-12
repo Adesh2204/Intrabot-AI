@@ -350,6 +350,295 @@
     }
   }
 
+  /* Financial News Section Styles */
+  .news-section {
+    margin-top: 32px;
+    background: rgba(23, 42, 69, 0.7);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(100, 255, 218, 0.2);
+    border-radius: 24px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(100, 255, 218, 0.1);
+    overflow: hidden;
+    position: relative;
+    animation: fadeInUp 0.8s ease-out;
+    animation-delay: 0.3s;
+    animation-fill-mode: both;
+  }
+
+  .news-header {
+    background: linear-gradient(135deg, rgba(100, 255, 218, 0.1) 0%, rgba(0, 198, 255, 0.1) 100%);
+    padding: 24px 32px;
+    border-bottom: 1px solid rgba(100, 255, 218, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .news-title {
+    font-size: 28px;
+    font-weight: 600;
+    color: #64ffda;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .news-icon {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, #64ffda 0%, #00c6ff 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    color: #0a192f;
+    box-shadow: 0 4px 8px rgba(100, 255, 218, 0.3);
+  }
+
+  .news-filters {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .filter-btn {
+    padding: 8px 16px;
+    background: rgba(52, 71, 103, 0.8);
+    border: 1px solid rgba(100, 255, 218, 0.3);
+    border-radius: 20px;
+    color: #ccd6f6;
+    font-family: inherit;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+  }
+
+  .filter-btn:hover {
+    border-color: #64ffda;
+    color: #64ffda;
+    box-shadow: 0 0 0 2px rgba(100, 255, 218, 0.2);
+    transform: translateY(-1px);
+  }
+
+  .filter-btn.active {
+    background: linear-gradient(135deg, #64ffda 0%, #00c6ff 100%);
+    color: #0a192f;
+    border-color: transparent;
+    font-weight: 500;
+    box-shadow: 0 4px 12px rgba(100, 255, 218, 0.4);
+  }
+
+  .news-content {
+    padding: 24px;
+    max-height: 600px;
+    overflow-y: auto;
+  }
+
+  .news-content::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .news-content::-webkit-scrollbar-track {
+    background: rgba(100, 255, 218, 0.1);
+    border-radius: 3px;
+  }
+
+  .news-content::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #64ffda 0%, #00c6ff 100%);
+    border-radius: 3px;
+  }
+
+  .news-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 20px;
+  }
+
+  .news-card {
+    background: rgba(52, 71, 103, 0.6);
+    border: 1px solid rgba(100, 255, 218, 0.2);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    position: relative;
+    opacity: 0;
+    animation: newsCardSlideIn 0.5s ease-out forwards;
+  }
+
+  .news-card:hover {
+    border-color: #64ffda;
+    box-shadow: 0 8px 24px rgba(100, 255, 218, 0.2);
+    transform: translateY(-4px);
+  }
+
+  .news-card-image {
+    width: 100%;
+    height: 120px;
+    background: linear-gradient(135deg, rgba(100, 255, 218, 0.1) 0%, rgba(0, 198, 255, 0.1) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: #64ffda;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .news-card-image::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, transparent 30%, rgba(100, 255, 218, 0.1) 50%, transparent 70%);
+    transform: translateX(-100%);
+    transition: transform 0.6s ease;
+  }
+
+  .news-card:hover .news-card-image::before {
+    transform: translateX(100%);
+  }
+
+  .news-card-content {
+    padding: 20px;
+  }
+
+  .news-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12px;
+    gap: 12px;
+  }
+
+  .news-tag {
+    background: linear-gradient(135deg, #64ffda 0%, #00c6ff 100%);
+    color: #0a192f;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    flex-shrink: 0;
+  }
+
+  .news-date {
+    font-size: 12px;
+    color: rgba(204, 214, 246, 0.6);
+    flex-shrink: 0;
+  }
+
+  .news-headline {
+    font-size: 16px;
+    font-weight: 600;
+    color: #ccd6f6;
+    margin-bottom: 12px;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .news-summary {
+    font-size: 14px;
+    color: rgba(204, 214, 246, 0.8);
+    line-height: 1.5;
+    margin-bottom: 16px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .news-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .news-source {
+    font-size: 12px;
+    color: rgba(204, 214, 246, 0.7);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .read-more-btn {
+    background: linear-gradient(135deg, #64ffda 0%, #00c6ff 100%);
+    color: #0a192f;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 8px rgba(100, 255, 218, 0.3);
+  }
+
+  .read-more-btn:hover {
+    transform: translateY(-1px) scale(1.05);
+    box-shadow: 0 4px 12px rgba(100, 255, 218, 0.4);
+  }
+
+  .read-more-btn:active {
+    transform: translateY(0) scale(0.95);
+  }
+
+  .loading-spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    color: #64ffda;
+  }
+
+  .spinner {
+    width: 32px;
+    height: 32px;
+    border: 3px solid rgba(100, 255, 218, 0.2);
+    border-top: 3px solid #64ffda;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+
+  .no-news {
+    text-align: center;
+    padding: 40px;
+    color: rgba(204, 214, 246, 0.6);
+    font-style: italic;
+  }
+
+  /* Animations */
+  @keyframes newsCardSlideIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px) scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
   /* Responsive Design */
   @media (max-width: 768px) {
     .container {
@@ -382,6 +671,30 @@
     .message-content {
       max-width: 85%;
     }
+
+    .news-header {
+      padding: 20px 24px;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .news-title {
+      font-size: 24px;
+    }
+
+    .news-content {
+      padding: 20px;
+    }
+
+    .news-grid {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    .news-filters {
+      width: 100%;
+      justify-content: flex-start;
+    }
   }
 </style>
 </head>
@@ -410,6 +723,40 @@
           <button id="send" class="send-button">
             <i class="fas fa-paper-plane"></i>
           </button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Financial News Section -->
+    <div class="news-section">
+      <div class="news-header">
+        <div class="news-title">
+          <div class="news-icon">
+            <i class="fas fa-chart-line"></i>
+          </div>
+          Latest Financial News
+        </div>
+        <div class="news-filters">
+          <button class="filter-btn active" data-filter="all">All</button>
+          <button class="filter-btn" data-filter="markets">Markets</button>
+          <button class="filter-btn" data-filter="banking">Banking</button>
+          <button class="filter-btn" data-filter="tech">Tech</button>
+          <button class="filter-btn" data-filter="crypto">Crypto</button>
+        </div>
+      </div>
+      
+      <div class="news-content">
+        <div id="newsGrid" class="news-grid">
+          <!-- News cards will be dynamically loaded here -->
+        </div>
+        
+        <div id="newsLoading" class="loading-spinner" style="display: none;">
+          <div class="spinner"></div>
+          <span style="margin-left: 12px;">Loading financial news...</span>
+        </div>
+        
+        <div id="noNews" class="no-news" style="display: none;">
+          No financial news available at the moment.
         </div>
       </div>
     </div>
@@ -575,6 +922,206 @@
       sendMessage();
     }
   });
+
+  // Financial News Section JavaScript
+  let currentFilter = 'all';
+  let newsData = [];
+
+  // Sample financial news data
+  const sampleNewsData = [
+    {
+      id: 1,
+      headline: "Federal Reserve Signals Potential Interest Rate Adjustments for 2024",
+      summary: "The Federal Reserve indicated possible changes to interest rates in the coming year, citing inflation concerns and economic growth targets. Market analysts are closely monitoring these developments.",
+      category: "markets",
+      source: "Financial Times",
+      date: "2024-01-15",
+      time: "09:30",
+      icon: "fas fa-university"
+    },
+    {
+      id: 2,
+      headline: "Tech Giants Report Strong Q4 Earnings Despite Market Volatility",
+      summary: "Major technology companies exceeded expectations in their quarterly reports, showing resilience in a challenging market environment. Cloud services and AI investments drove growth.",
+      category: "tech",
+      source: "TechCrunch",
+      date: "2024-01-15",
+      time: "08:45",
+      icon: "fas fa-microchip"
+    },
+    {
+      id: 3,
+      headline: "Bitcoin Surges Above $50K as Institutional Adoption Increases",
+      summary: "Cryptocurrency markets experienced significant gains as more institutional investors enter the space. Bitcoin led the rally with increased trading volumes and positive sentiment.",
+      category: "crypto",
+      source: "CoinDesk",
+      date: "2024-01-14",
+      time: "16:20",
+      icon: "fab fa-bitcoin"
+    },
+    {
+      id: 4,
+      headline: "Major Banks Announce Increased Investment in Digital Infrastructure",
+      summary: "Leading financial institutions are accelerating their digital transformation initiatives, investing billions in new technologies to improve customer experience and operational efficiency.",
+      category: "banking",
+      source: "Bloomberg",
+      date: "2024-01-14",
+      time: "14:15",
+      icon: "fas fa-building"
+    },
+    {
+      id: 5,
+      headline: "Global Markets Show Mixed Results Amid Geopolitical Tensions",
+      summary: "International stock markets displayed varied performance as investors navigate ongoing geopolitical uncertainties and economic policy changes across major economies.",
+      category: "markets",
+      source: "Reuters",
+      date: "2024-01-13",
+      time: "11:30",
+      icon: "fas fa-globe-americas"
+    },
+    {
+      id: 6,
+      headline: "Fintech Startups Secure Record Funding in Latest Investment Round",
+      summary: "Emerging financial technology companies raised unprecedented amounts in venture capital funding, signaling continued confidence in digital financial services innovation.",
+      category: "tech",
+      source: "VentureBeat",
+      date: "2024-01-13",
+      time: "10:45",
+      icon: "fas fa-rocket"
+    }
+  ];
+
+  function formatDate(dateStr, timeStr) {
+    const date = new Date(dateStr + 'T' + timeStr);
+    const now = new Date();
+    const diffHours = Math.floor((now - date) / (1000 * 60 * 60));
+    
+    if (diffHours < 1) {
+      return 'Just now';
+    } else if (diffHours < 24) {
+      return `${diffHours}h ago`;
+    } else {
+      const diffDays = Math.floor(diffHours / 24);
+      return `${diffDays}d ago`;
+    }
+  }
+
+  function createNewsCard(article, index) {
+    return `
+      <div class="news-card" style="animation-delay: ${index * 0.1}s">
+        <div class="news-card-image">
+          <i class="${article.icon}"></i>
+        </div>
+        <div class="news-card-content">
+          <div class="news-card-header">
+            <div class="news-tag">${article.category}</div>
+            <div class="news-date">${formatDate(article.date, article.time)}</div>
+          </div>
+          <div class="news-headline">${article.headline}</div>
+          <div class="news-summary">${article.summary}</div>
+          <div class="news-footer">
+            <div class="news-source">
+              <i class="fas fa-newspaper"></i>
+              ${article.source}
+            </div>
+            <button class="read-more-btn" onclick="openNewsArticle(${article.id})">
+              Read More
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  function renderNews(articles = newsData) {
+    const newsGrid = document.getElementById('newsGrid');
+    const noNews = document.getElementById('noNews');
+    
+    if (articles.length === 0) {
+      newsGrid.innerHTML = '';
+      noNews.style.display = 'block';
+      return;
+    }
+    
+    noNews.style.display = 'none';
+    newsGrid.innerHTML = articles.map((article, index) => createNewsCard(article, index)).join('');
+  }
+
+  function filterNews(category) {
+    currentFilter = category;
+    
+    // Update filter button states
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.classList.remove('active');
+      if (btn.dataset.filter === category) {
+        btn.classList.add('active');
+      }
+    });
+    
+    // Filter and render news
+    const filteredNews = category === 'all' ? newsData : newsData.filter(article => article.category === category);
+    renderNews(filteredNews);
+  }
+
+  function openNewsArticle(articleId) {
+    const article = newsData.find(a => a.id === articleId);
+    if (article) {
+      // In a real application, this would open the full article
+      // For demo purposes, we'll show an alert
+      alert(`Opening article: "${article.headline}"\n\nThis would typically open the full article in a new tab or modal.`);
+    }
+  }
+
+  async function loadFinancialNews() {
+    const newsLoading = document.getElementById('newsLoading');
+    
+    try {
+      newsLoading.style.display = 'flex';
+      
+      // Try to fetch from API first, fallback to sample data
+      try {
+        const response = await fetch('/financial-news');
+        if (response.ok) {
+          const apiNews = await response.json();
+          newsData = apiNews.articles || [];
+        } else {
+          throw new Error('API not available');
+        }
+      } catch (apiError) {
+        // Use sample data if API is not available
+        newsData = sampleNewsData;
+      }
+      
+      // Simulate loading delay for better UX
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      newsLoading.style.display = 'none';
+      renderNews();
+      
+    } catch (error) {
+      console.error('Failed to load financial news:', error);
+      newsLoading.style.display = 'none';
+      document.getElementById('noNews').style.display = 'block';
+    }
+  }
+
+  // Event listeners for filter buttons
+  document.addEventListener('DOMContentLoaded', function() {
+    // Add click event listeners to filter buttons
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        filterNews(this.dataset.filter);
+      });
+    });
+    
+    // Load news when page loads
+    loadFinancialNews();
+  });
+
+  // Refresh news every 5 minutes
+  setInterval(() => {
+    loadFinancialNews();
+  }, 5 * 60 * 1000);
 </script>
 </body>
 </html>
