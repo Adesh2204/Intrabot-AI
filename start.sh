@@ -25,10 +25,12 @@ if [ ! -f ".env" ]; then
     echo "   Especially set your GEMINI_API_KEY"
 fi
 
-# Check if data directory exists and create sample data if needed
-if [ ! -d "offline-org-chatbot/data" ]; then
-    echo "📁 Creating data directory structure..."
-    mkdir -p offline-org-chatbot/data
+# Initialize database if needed
+if [ ! -d "offline-org-chatbot/.chromadb" ]; then
+    echo "🗄️  Initializing database..."
+    python init_db.py
+else
+    echo "✅ Database already exists"
 fi
 
 # Start the FastAPI server

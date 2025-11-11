@@ -8,23 +8,32 @@ COLLECTION_NAME = "intrabot_docs"
 TOP_K = 4
 
 def search(query_text, top_k=TOP_K):
-    # load embedding model
-    model = SentenceTransformer(MODEL_NAME)
-
-    # open ChromaDB (same persist dir used during ingest)
-    client = chromadb.PersistentClient(path=CHROMA_DIR)
     try:
-        collection = client.get_collection(COLLECTION_NAME)
-    except Exception:
-        # fallback in case collection isn't found
-        collection = client.get_or_create_collection(COLLECTION_NAME)
+        # load embedding model
+        model = SentenceTransformer(MODEL_NAME)
 
-    # embed query
-    q_emb = model.encode([query_text])[0].tolist()
+        # open ChromaDB (same persist dir used during ingest)
+        client = chromadb.PersistentClient(path=CHROMA_DIR)
+        try:
+            collection = client.get_collection(COLLECTION_NAME)
+        except Exception:
+            # fallback in case collection isn't found
+            collection = client.get_or_create_collection(COLLECTION_NAME)
+            # Return empty results if collection is empty
+            if collection.count() == 0:
+                print("Warning: Database collection is empty. Run 'python init_db.py' to initialize.")
+                return {"documents": [[]], "metadatas": [[]], "distances": [[]]}
 
-    # run vector search
-    results = collection.query(query_embeddings=[q_emb], n_results=top_k)
-    return results
+        # embed query
+        q_emb = model.encode([query_text])[0].tolist()
+
+        # run vector search
+        results = collection.query(query_embeddings=[q_emb], n_results=top_k)
+        return results
+    except Exception as e:
+        print(f"Search error: {e}")
+        # Return empty results on error
+        return {"documents": [[]], "metadatas": [[]], "distances": [[]]}
 
 if __name__ == "__main__":
     q = input("Enter a question (e.g. 'How do I apply for leave?'): ").strip()

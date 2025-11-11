@@ -24,8 +24,8 @@ def generate_response(query: str, context: str = None) -> str:
         str: Generated response from Gemini
     """
     try:
-        # Initialize the model
-        model = genai.GenerativeModel('gemini-pro')
+        # Initialize the model with working model name
+        model = genai.GenerativeModel('gemini-1.5-pro-latest')
         
         # Prepare the prompt with context if provided
         if context:

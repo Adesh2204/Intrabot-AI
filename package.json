@@ -4,7 +4,13 @@
     "dev": "uvicorn api:app --host 127.0.0.1 --port 8000 --reload --log-level debug",
     "production": "uvicorn api:app --host 0.0.0.0 --port 8000",
     "install": "pip install -r requirements.txt",
-    "setup": "./start.sh"
+    "setup": "./start.sh",
+    "init-db": "python init_db.py",
+    "health-check": "python health_check.py",
+    "doctor": "python health_check.py",
+    "test-api": "python -c \"import requests; print('API Status:', requests.get('http://127.0.0.1:8000').json())\"",
+    "test-retrieval": "python retrieval.py",
+    "src-start": "uvicorn src.app:app --host 127.0.0.1 --port 8001 --reload"
   },
   "name": "intrabot-ai",
   "version": "1.0.0",
